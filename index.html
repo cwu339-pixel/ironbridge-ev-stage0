@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ironbridge EV Stage-0 Screening</title>
+  <style>
+    :root {
+      --page: #f7f8fa;
+      --paper: #ffffff;
+      --ink: #18212b;
+      --muted: #607080;
+      --line: #d8e0e8;
+      --navy: #18344f;
+      --navy-soft: #eef3f8;
+      --green: #4a6b57;
+      --amber: #8c6d2f;
+      --border: 1px solid var(--line);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Avenir Next", "Segoe UI", "PingFang SC", sans-serif;
+      background: #f3f5f8;
+    }
+
+    h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
+
+    p { margin: 0; color: var(--muted); line-height: 1.65; }
+
+    img { display: block; width: 100%; }
+
+    .shell {
+      width: min(1220px, calc(100vw - 32px));
+      margin: 18px auto 40px;
+    }
+
+    .hero, section {
+      background: var(--paper);
+      border: var(--border);
+      border-radius: 10px;
+    }
+
+    .hero { padding: 20px 22px; }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--navy);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .hero h1 {
+      font-size: clamp(26px, 4vw, 34px);
+      line-height: 1.08;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .hero p.lead { font-size: 14px; max-width: 64ch; }
+
+    .hero-notes { display: grid; gap: 12px; }
+
+    .verdict-box,
+    .meta-strip,
+    .summary-card,
+    .panel,
+    .fact,
+    .note,
+    .table-wrap {
+      border: var(--border);
+      border-radius: 10px;
+    }
+
+    .verdict-box {
+      padding: 16px 18px;
+      background: #fbfcfd;
+      border-left: 4px solid var(--navy);
+    }
+
+    .verdict-box strong { color: var(--ink); }
+
+    .meta-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      overflow: hidden;
+      margin-top: 16px;
+    }
+
+    .meta-item {
+      padding: 14px 16px;
+      background: var(--navy-soft);
+      border-right: var(--border);
+    }
+
+    .meta-item:last-child { border-right: 0; }
+
+    .meta-item span {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--navy);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .meta-item strong {
+      display: block;
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .risk-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .summary-card {
+      padding: 16px;
+      background: #fff;
+    }
+
+    .summary-card span {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .summary-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 17px;
+      line-height: 1.2;
+    }
+
+    section {
+      margin-top: 16px;
+      padding: 20px 22px;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 18px;
+      align-items: start;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: var(--border);
+    }
+
+    .section-index {
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section-head h2 {
+      font-size: 24px;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .panel {
+      padding: 12px;
+      background: #fff;
+    }
+
+    .panel h3 {
+      margin-bottom: 10px;
+      color: var(--navy);
+      font-size: 18px;
+    }
+
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .fact {
+      padding: 14px 15px;
+      background: #fbfcfd;
+    }
+
+    .fact strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .table-wrap {
+      padding: 0;
+      overflow: hidden;
+      margin-top: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead { background: var(--navy); }
+
+    th {
+      padding: 12px 10px;
+      color: #fff;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    td {
+      padding: 11px 10px;
+      border-top: var(--border);
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    tbody tr:nth-child(even) { background: #f8fafc; }
+
+    .note {
+      margin-top: 14px;
+      padding: 14px 16px;
+      background: #f8fbfd;
+      border-left: 4px solid var(--amber);
+    }
+
+    .note strong { color: var(--ink); }
+
+    .scenario-wrap {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    footer {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: right;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .summary-grid,
+      .risk-strip,
+      .two-col,
+      .facts,
+      .section-head,
+      .meta-strip,
+      .scenario-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .meta-item {
+        border-right: 0;
+        border-bottom: var(--border);
+      }
+
+      .meta-item:last-child { border-bottom: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div class="eyebrow">Stage-0 screening note</div>
+      <div class="hero-grid">
+        <div>
+          <h1>Ironbridge 项目快照 / 初步判断</h1>
+          <p class="lead">
+            <strong>Marnwood Hall / Buildwas Road</strong> 当前更适合作为 Stage-0 项目入库材料阅读，用于判断该点位是否值得继续投入下一步开发验证。
+          </p>
+          <div class="meta-strip">
+            <article class="meta-item">
+              <span>Site</span>
+              <strong>Marnwood Hall / Buildwas Road</strong>
+            </article>
+            <article class="meta-item">
+              <span>Boundary</span>
+              <strong>5km / 9 comparable sites</strong>
+            </article>
+            <article class="meta-item">
+              <span>Window</span>
+              <strong>3.1 day monitoring window</strong>
+            </article>
+            <article class="meta-item">
+              <span>Action</span>
+              <strong>Proceed to next proof only</strong>
+            </article>
+          </div>
+        </div>
+        <div class="hero-notes">
+          <div class="verdict-box">
+            <p>
+              <strong>Recommendation:</strong> Conditional Proceed。当前更像 destination / town-edge 型补能机会，
+              有继续做 proof 的价值，但还不是已经证实的高周转 hub。
+            </p>
+          </div>
+          <div class="verdict-box">
+            <p>
+              <strong>当前核心证据：</strong>5km 内 9 个 comparable public/commercial 样本里，最活跃的是 Telford Madeley KFC 13 Parkway, Station Yard, Wharfage Car Park；
+              区域有真实公共充电活动，但 demand 明显集中在少数成熟节点。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-grid">
+        <article class="summary-card">
+          <span>监控窗口</span>
+          <strong>3.1 天</strong>
+          <p>本次判断基于约 3 天监控窗口。</p>
+        </article>
+        <article class="summary-card">
+          <span>平均占用率</span>
+          <strong>3.9%</strong>
+          <p>按整个 5km 可比区域看，任一时点平均只有约 3.9% 的枪在充电。</p>
+        </article>
+        <article class="summary-card">
+          <span>峰值同时充电</span>
+          <strong>6 个枪</strong>
+          <p>单个快照里最多同时有 6 个枪在充电。</p>
+        </article>
+        <article class="summary-card">
+          <span>5km 区域需求 proxy</span>
+          <strong>353 - 655 kWh/day</strong>
+          <p>这是整个 5km 可比区域的需求 proxy，不是 Marnwood Hall 本站预计电量。</p>
+        </article>
+      </div>
+      <div class="risk-strip">
+        <div class="note" style="margin-top:0;">
+          <p><strong>主要风险 1：</strong>当前 demand 主要由 KFC rapid / Tesco retail 节点承接，Marnwood Hall 自身 capture 仍待验证。</p>
+        </div>
+        <div class="note" style="margin-top:0;">
+          <p><strong>主要风险 2：</strong>grid、layout、bay control 与 site authority 还没有进入 Stage-1 级别核实。</p>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <div class="section-head">
+        <div class="section-index">01 Site introduction</div>
+        <div>
+          <h2>项目 / 场地介绍</h2>
+          <p>
+            Marnwood Hall 位于 Buildwas Road 前场位置，项目判断应先从场地属性和场站定位出发，再看车流、竞争和真实使用情况。
+          </p>
+        </div>
+      </div>
+      <div class="two-col">
+        <article class="panel">
+          <h3>场地介绍</h3>
+          <p>
+            Marnwood Hall 位于 Buildwas Road, Ironbridge，处于 Ironbridge / Broseley / Madeley 本地出行圈层的前场位置。
+            场地面向主路，具备较好的 frontage 可见性，更适合作为本地需求承接点，而不是封闭式目的地站点。
+          </p>
+        </article>
+        <article class="panel">
+          <h3>场站介绍</h3>
+          <p>
+            拟建充电场站位于场地前侧，紧邻 Buildwas Road frontage。该点位不是典型 meal-stop 场景，而是一个 frontage-led local charging point，
+            核心在于承接周边已存在的公共充电需求，并验证其作为本地补能节点的可行性。
+          </p>
+        </article>
+      </div>
+      <div class="facts">
+        <article class="fact">
+          <strong>区位属性</strong>
+          <p>更接近 town-edge / local-through-traffic / frontage capture 场景，不是隐藏在后场或封闭园区内部的点位。</p>
+        </article>
+        <article class="fact">
+          <strong>当前阶段重点</strong>
+          <p>先验证周边真实需求、竞争格局以及场地自身承接能力，而不是直接给投资回报结论。</p>
+        </article>
+        <article class="fact">
+          <strong>判断逻辑</strong>
+          <p>这个项目不是复制某个成熟快充站，而是判断它能否承接 Ironbridge 周边已经存在的公共充电需求。</p>
+        </article>
+      </div>
+      <div class="note">
+        <p>
+          当前更合理的定位是 town-edge / local-through-traffic / frontage capture 场景，而不是封闭式目的地站点或成熟 meal-stop 节点。
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="section-index">02 Traffic</div>
+        <div>
+          <h2>车流 / 交通基础</h2>
+          <p>
+            周边道路交通读数显示，Marnwood Hall 所在前场具备真实且不低的车流基础。这里的 <strong>AADT</strong>
+            指 <strong>年平均日车流量</strong>，单位为 <strong>辆/日</strong>。
+          </p>
+        </div>
+      </div>
+      <div class="two-col">
+        <article class="panel">
+          <h3>场站周边道路点位</h3>
+          <img src="assets/traffic_map.png" alt="Traffic map around Marnwood Hall" />
+        </article>
+        <article class="panel">
+          <h3>Main corridors by AADT</h3>
+          <img src="assets/traffic_bar.png" alt="Main traffic corridors near the site" />
+        </article>
+      </div>
+      <div class="note">
+        <p>
+          近场主要道路 <strong>A4169</strong> 的读数约为 <strong>7.3k-9.5k 辆/日</strong>，
+          更外层主干道 <strong>A442</strong> 最高约 <strong>28.8k 辆/日</strong>。整体看，该点位周边车流基础中等偏强，
+          支持继续验证其作为本地前场补能点的可行性。
+        </p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Road</th>
+              <th>Type</th>
+              <th>Nearest point</th>
+              <th>Peak AADT</th>
+              <th>Read-through</th>
+            </tr>
+          </thead>
+          <tbody>
+
+    <tr>
+      <td>A442</td>
+      <td>Major</td>
+      <td>4.5 km</td>
+      <td>28,846</td>
+      <td>Primary regional corridor</td>
+    </tr>
+
+
+    <tr>
+      <td>A4169</td>
+      <td>Major</td>
+      <td>1.3 km</td>
+      <td>18,445</td>
+      <td>Primary local approach</td>
+    </tr>
+
+
+    <tr>
+      <td>C</td>
+      <td>Minor</td>
+      <td>1.6 km</td>
+      <td>5,768</td>
+      <td>Secondary local road</td>
+    </tr>
+
+
+    <tr>
+      <td>U</td>
+      <td>Minor</td>
+      <td>4.0 km</td>
+      <td>1,288</td>
+      <td>Secondary local road</td>
+    </tr>
+
+          </tbody>
+        </table>
+      </div>
+      <div class="facts">
+        <article class="fact">
+          <strong>A4169</strong>
+          <p>离场站最近的主要道路，近场读数约 7.3k-9.5k 辆/日，是判断本地前场通行基础的核心依据。</p>
+        </article>
+        <article class="fact">
+          <strong>A442</strong>
+          <p>更外层的区域干道，峰值约 28.8k 辆/日，说明更广域交通联系存在，但不是场站最近通道。</p>
+        </article>
+        <article class="fact">
+          <strong>结论</strong>
+          <p>该点位旁边的车流基础不弱，下一步应结合竞争分布和真实使用情况判断它能否转化为稳定充电需求。</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="section-index">03 Competition</div>
+        <div>
+          <h2>主要充电竞争对手的地图部署</h2>
+          <p>
+            这版不做“所有站点全查”，而是沿用 comparable pool 逻辑：5km 内 public/commercial 样本共 6 个，
+            用来判断本地真实使用和竞争承接结构。
+          </p>
+        </div>
+      </div>
+      <div class="two-col">
+        <article class="panel">
+          <h3>Comparable deployment map</h3>
+          <img src="assets/competitor_map.png" alt="Comparable deployment map" />
+        </article>
+        <article class="panel">
+          <h3>Scale vs observed occupancy</h3>
+          <img src="assets/competitor_bar.png" alt="Comparable station scale and occupancy" />
+        </article>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Location</th>
+              <th>Distance</th>
+              <th>EVSE</th>
+              <th>Network</th>
+              <th>Observed occ.</th>
+              <th>Avg unknown</th>
+            </tr>
+          </thead>
+          <tbody>
+
+    <tr>
+      <td>Station Yard</td>
+      <td>0.0 km</td>
+      <td>12</td>
+      <td>Believ</td>
+      <td>1.2%</td>
+      <td>0</td>
+    </tr>
+
+
+    <tr>
+      <td>Wharfage Car Park</td>
+      <td>0.6 km</td>
+      <td>6</td>
+      <td>Believ</td>
+      <td>9.9%</td>
+      <td>0</td>
+    </tr>
+
+
+    <tr>
+      <td>Dale End Car Park</td>
+      <td>0.7 km</td>
+      <td>4</td>
+      <td>Believ</td>
+      <td>0.4%</td>
+      <td>0</td>
+    </tr>
+
+
+    <tr>
+      <td>Best Western Valley Hotel</td>
+      <td>0.9 km</td>
+      <td>1</td>
+      <td>ZeroNet</td>
+      <td>0.0%</td>
+      <td>1</td>
+    </tr>
+
+
+    <tr>
+      <td>Dark Lane Car Park</td>
+      <td>1.6 km</td>
+      <td>5</td>
+      <td>Connected Kerb</td>
+      <td>0.0%</td>
+      <td>0</td>
+    </tr>
+
+
+    <tr>
+      <td>Broseley Library Car Park</td>
+      <td>1.8 km</td>
+      <td>4</td>
+      <td>Connected Kerb</td>
+      <td>3.2%</td>
+      <td>0</td>
+    </tr>
+
+
+    <tr>
+      <td>Teldoc Madeley Medical Centre</td>
+      <td>2.4 km</td>
+      <td>1</td>
+      <td>PLUG Charging</td>
+      <td>3.0%</td>
+      <td>0</td>
+    </tr>
+
+
+    <tr>
+      <td>Tesco Superstore - Madeley</td>
+      <td>2.4 km</td>
+      <td>4</td>
+      <td>Pod</td>
+      <td>5.2%</td>
+      <td>0</td>
+    </tr>
+
+
+    <tr>
+      <td>Telford Madeley KFC 13 Parkway</td>
+      <td>2.5 km</td>
+      <td>2</td>
+      <td>InstaVolt</td>
+      <td>11.9%</td>
+      <td>0</td>
+    </tr>
+
+          </tbody>
+        </table>
+      </div>
+      <div class="note">
+        <p>
+          当前比较边界为 5km 内 public/commercial comparable sites，不含更远的 motorway service 或 town-centre hub。
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="section-index">04 Observed usage</div>
+        <div>
+          <h2>充电用电时间规律</h2>
+          <p>
+            这是最关键的一页。过去 75.5 小时里，5km comparable pool 的平均 area occupancy 约 <strong>3.9%</strong>，
+            峰值同时 charging 到过 <strong>6</strong> 个 EVSE。活跃度主要集中在 Telford Madeley KFC 13 Parkway, Station Yard, Wharfage Car Park，
+            这页回答的是“什么时候在充，主要在哪些成熟节点发生”。
+          </p>
+        </div>
+      </div>
+      <div class="two-col">
+        <article class="panel">
+          <h3>Station-by-hour heatmap</h3>
+          <img src="assets/observed_usage_heatmap.png" alt="Observed usage heatmap" />
+        </article>
+        <article class="panel">
+          <h3>Top active stations</h3>
+          <div class="facts">
+
+    <article class="fact">
+      <strong>Telford Madeley KFC 13 Parkway</strong>
+      <p>平均占用约 11.9% ，日均 proxy 约 358 kWh/day。</p>
+    </article>
+
+
+    <article class="fact">
+      <strong>Station Yard</strong>
+      <p>平均占用约 1.2% ，日均 proxy 约 62 kWh/day。</p>
+    </article>
+
+
+    <article class="fact">
+      <strong>Wharfage Car Park</strong>
+      <p>平均占用约 9.9% ，日均 proxy 约 51 kWh/day。</p>
+    </article>
+
+          </div>
+        </article>
+      </div>
+      <div class="note">
+        <p>
+          热力图反映的是各个 comparable station 在一天 24 小时中的活跃时段分布。
+          现阶段能够确认的是周边存在真实公共充电活动，且活动更偏向少数成熟节点和特定时段。
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="section-index">05 Demand proxy</div>
+        <div>
+          <h2>预期充电量</h2>
+          <p>
+            这里先把 observed charging hours 转成 delivered-kWh 的区间 proxy。
+            当前 5km area demand pool 约为 <strong>353 - 655 kWh/day</strong>；
+            这一页回答的是“如果新站承接一部分区域 demand，大概是什么量级”。
+          </p>
+        </div>
+      </div>
+      <div class="scenario-wrap">
+        <article class="panel">
+          <h3>Estimated delivered-kWh proxy</h3>
+          <img src="assets/demand_proxy_bar.png" alt="Estimated daily delivered kWh proxy by station" />
+        </article>
+        <article class="panel">
+          <h3>Screening scenarios</h3>
+          <div class="table-wrap" style="margin-top:0;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Scenario</th>
+                  <th>Capture</th>
+                  <th>kWh/day</th>
+                  <th>kWh/year</th>
+                </tr>
+              </thead>
+              <tbody>
+
+    <tr>
+      <td>Low</td>
+      <td>5%</td>
+      <td>18 - 33</td>
+      <td>6437 - 11954</td>
+    </tr>
+
+
+    <tr>
+      <td>Base</td>
+      <td>10%</td>
+      <td>35 - 66</td>
+      <td>12873 - 23908</td>
+    </tr>
+
+
+    <tr>
+      <td>High</td>
+      <td>15%</td>
+      <td>53 - 98</td>
+      <td>19310 - 35862</td>
+    </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+      <div class="note">
+        <p>
+          这是 screening-level demand proxy，不是 revenue forecast，也不是电表级 delivered kWh。
+          更合适的理解方式是：先看整个区域的 proxy，再判断新站可能承接其中多少。
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="section-index">06 Risk and next step</div>
+        <div>
+          <h2>风险、关键缺口与下一步动作</h2>
+          <p>
+            当前最稳的表述不是“值得投”，而是“值得继续验证”。这一页把 Stage-0 还没有证明的东西收口成风险和 next-step gate。
+          </p>
+        </div>
+      </div>
+      <div class="table-wrap" style="margin-top:0;">
+        <table>
+          <thead>
+            <tr>
+              <th>Risk</th>
+              <th>What we know now</th>
+              <th>Why it matters</th>
+              <th>Next-step proof</th>
+            </tr>
+          </thead>
+          <tbody>
+
+    <tr>
+      <td>Capture risk</td>
+      <td>区域真实活动主要集中在 KFC rapid 与 Tesco retail 节点，Marnwood Hall 自身还没有直接 usage 证明。</td>
+      <td>新站不一定能复制成熟节点的周转。</td>
+      <td>补 site visit read-through、host fit、pricing / dwell-time 假设。</td>
+    </tr>
+    <tr>
+      <td>Grid and layout</td>
+      <td>当前只有 frontage 与场景判断，没有正式 grid quote，也没有 charger layout。</td>
+      <td>连接成本、进出流线和 bay 落位仍可能改变方案。</td>
+      <td>进入 Stage-1 后先做 desktop grid check 与 preliminary layout。</td>
+    </tr>
+    <tr>
+      <td>Window depth</td>
+      <td>当前窗口约 3.1 天，适合做初筛，不适合做季节性结论。</td>
+      <td>短窗可能低估或高估周末/工作日结构。</td>
+      <td>继续刷新监控窗，并在后续版本补 weekday / weekend 读法。</td>
+    </tr>
+
+          </tbody>
+        </table>
+      </div>
+      <div class="facts">
+        <article class="fact">
+          <strong>What is already proven</strong>
+          <p>本地 comparable pool 已经证明区域里有真实公共充电活动，且活跃度集中在 KFC rapid 和 Tesco retail 两类节点。</p>
+        </article>
+        <article class="fact">
+          <strong>What is not yet proven</strong>
+          <p>Marnwood Hall 本点能拿到多少 capture，还没有被 frontage、pricing、access 和 dwell-time 证据证明。</p>
+        </article>
+        <article class="fact">
+          <strong>Recommended gate</strong>
+          <p>进入 Stage-1，但只做小额开发验证：desktop grid check、site visit replay、layout、parking/access 和 host readiness。</p>
+        </article>
+      </div>
+      <div class="note">
+        <p>
+          <strong>Gate wording:</strong> Screening-level demand proxy only. This is not an investment approval case and should not be read as a revenue case.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      Local inputs: DfT AADF 2024, site visit pack, and refreshed Ironbridge window (2026-05-11T02:28:01+00:00 to 2026-05-14T03:45:02+00:00).
+    </footer>
+  </main>
+</body>
+</html>
