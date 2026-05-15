@@ -131,7 +131,7 @@
 
     .summary-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 14px;
       margin-top: 18px;
     }
@@ -427,6 +427,13 @@
 
     .note strong { color: var(--ink); }
 
+    .calc-strip {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
     .scenario-wrap {
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
@@ -468,15 +475,15 @@
     }
 
     @page {
-      size: A4 landscape;
+      size: 13.333in 7.5in;
       margin: 0;
     }
 
     @media print {
       html,
       body {
-        width: 297mm;
-        min-height: 210mm;
+        width: 13.333in;
+        min-height: 7.5in;
       }
 
       body {
@@ -493,9 +500,9 @@
       .hero,
       section {
         margin: 0;
-        width: 297mm;
-        height: 210mm;
-        padding: 8mm 9mm 7mm;
+        width: 13.333in;
+        height: 7.5in;
+        padding: 0.28in 0.4in 0.26in;
         border-radius: 0;
         box-shadow: none;
         overflow: hidden;
@@ -506,6 +513,7 @@
       .hero {
         break-after: page;
         page-break-after: always;
+        justify-content: space-between;
       }
 
       section {
@@ -526,12 +534,112 @@
       .two-col,
       .observed-layout,
       .scenario-wrap {
-        gap: 10px;
+        gap: 9px;
+      }
+
+      .summary-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 9px;
+        margin-top: 10px;
+      }
+
+      .site-strip-vertical {
+        gap: 8px;
+        margin-top: 6px;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1.08fr 0.92fr;
+      }
+
+      .hero h1 {
+        margin-bottom: 5px;
+      }
+
+      .hero p.lead {
+        font-size: 11.5pt;
+        line-height: 1.28;
+      }
+
+      .hero-notes {
+        gap: 7px;
+      }
+
+      .verdict-box {
+        padding: 9px 11px;
+      }
+
+      .meta-strip {
+        margin-top: 10px;
+      }
+
+      .meta-item {
+        padding: 9px 10px;
+      }
+
+      .meta-item span {
+        margin-bottom: 4px;
+        font-size: 8pt;
+      }
+
+      .meta-item strong {
+        font-size: 10.5pt;
+        line-height: 1.22;
+      }
+
+      .summary-card {
+        min-height: 1.48in;
+      }
+
+      .summary-card span {
+        margin-bottom: 5px;
+        font-size: 8pt;
+      }
+
+      .summary-card strong {
+        margin-bottom: 6px;
+      }
+
+      .hero-bottom {
+        gap: 9px;
+        margin-top: 10px;
+      }
+
+      .takeaway-card {
+        min-height: 0.92in;
+      }
+
+      .takeaway-card strong {
+        margin-bottom: 5px;
+      }
+
+      .competition-layout .panel img {
+        height: 3.35in;
+        object-fit: contain;
+      }
+
+      .competition-extra {
+        display: none;
       }
 
       .section-head {
+        grid-template-columns: 1.58in 1fr;
+        gap: 14px;
         margin-bottom: 10px;
-        padding-bottom: 9px;
+        padding-bottom: 8px;
+      }
+
+      .section-index {
+        font-size: 8.8pt;
+      }
+
+      .section-head h2 {
+        margin-bottom: 4px;
+      }
+
+      .section-head p {
+        font-size: 10.6pt;
+        line-height: 1.32;
       }
 
       .panel,
@@ -549,36 +657,44 @@
       }
 
       h1 {
-        font-size: 23pt;
+        font-size: 30pt;
       }
 
       h2 {
-        font-size: 17pt;
+        font-size: 21pt;
       }
 
       h3 {
-        font-size: 12pt;
+        font-size: 14pt;
       }
 
       p,
-      td,
-      th,
       .site-card p,
       .compact-card p {
-        font-size: 8.8pt;
-        line-height: 1.32;
+        font-size: 10.9pt;
+        line-height: 1.3;
+      }
+
+      td,
+      th {
+        font-size: 9.5pt;
+        line-height: 1.25;
       }
 
       .summary-card strong {
-        font-size: 16pt;
+        font-size: 21pt;
       }
 
       .site-metrics b {
-        font-size: 10.5pt;
+        font-size: 13.5pt;
       }
 
       .panel {
         padding: 10px;
+      }
+
+      .panel h3 {
+        margin-bottom: 7px;
       }
 
       .fact,
@@ -586,16 +702,127 @@
       .site-card,
       .summary-card,
       .takeaway-card {
+        padding: 10px 12px;
+      }
+
+      .facts {
+        gap: 9px;
+        margin-top: 9px;
+      }
+
+      .fact strong {
+        margin-bottom: 4px;
+        font-size: 11pt;
+      }
+
+      .site-photo {
+        margin-top: 8px;
+      }
+
+      .site-photo img {
+        height: 2.45in;
+        aspect-ratio: auto;
+        object-fit: cover;
+      }
+
+      .site-intro-note {
+        display: none;
+      }
+
+      .calc-strip {
+        grid-template-columns: 1.35in 1fr;
+        gap: 9px;
+      }
+
+      .observed-note {
+        margin-top: 9px;
+      }
+
+      .observed-note p {
+        font-size: 10pt;
+        line-height: 1.25;
+      }
+
+      .observed-layout {
+        grid-template-columns: 1.18fr 0.92fr;
+        align-items: stretch;
+      }
+
+      .observed-layout > .panel:first-child img {
+        height: 4.65in;
+        object-fit: contain;
+      }
+
+      .observed-layout > .panel:last-child {
+        min-height: 5.35in;
+      }
+
+      .observed-layout .site-strip-vertical {
+        grid-template-rows: repeat(3, minmax(0, 1fr));
+        height: 4.75in;
+      }
+
+      .site-card {
         padding: 10px 11px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .site-card strong {
+        margin-bottom: 7px;
+        font-size: 12.5pt;
+      }
+
+      .site-card-kicker {
+        margin-bottom: 4px;
+        font-size: 8pt;
+      }
+
+      .site-metrics {
+        gap: 6px;
+        margin-bottom: 7px;
+      }
+
+      .site-metrics span {
+        padding: 6px 6px 5px;
+      }
+
+      .site-metrics small {
+        font-size: 7.5pt;
+      }
+
+      .demand-note p {
+        font-size: 9.6pt;
+        line-height: 1.25;
       }
 
       .note {
-        margin-top: 8px;
-        padding: 7px 10px;
+        margin-top: 10px;
+        padding: 9px 12px;
       }
 
-      section > .note:last-child {
-        margin-top: auto;
+      .risk-section {
+        justify-content: space-between;
+      }
+
+      .risk-section .facts,
+      .risk-section .note {
+        margin-top: 0;
+      }
+
+      .risk-section .fact {
+        min-height: 1.9in;
+      }
+
+      .risk-section .note {
+        min-height: 0.38in;
+        display: flex;
+        align-items: center;
+      }
+
+      .risk-section td {
+        font-size: 9.8pt;
       }
 
       footer {
@@ -612,7 +839,7 @@
         <div>
           <h1>Ironbridge Project Snapshot / Initial View</h1>
           <p class="lead">
-            <strong>Marnwood Hall / Buildwas Road</strong> is best read as a Stage-0 screening note used to decide whether this location is worth taking into the next round of development proof.
+            <strong>Marnwood Hall / Buildwas Road</strong> is a Stage-0 screening view for deciding whether this site should move into the next development proof stage.
           </p>
           <div class="meta-strip">
             <article class="meta-item">
@@ -636,17 +863,17 @@
         <div class="hero-notes">
           <div class="verdict-box">
             <p>
-              <strong>Recommendation:</strong> Conditional Proceed. At this stage the opportunity looks more like a destination / town-edge charging point with proof value, not a proven high-turnover hub.
+              <strong>Recommendation:</strong> Conditional Proceed. Treat this as a frontage-led local charging opportunity, not a proven high-turnover hub.
             </p>
           </div>
           <div class="verdict-box">
             <p>
-              <strong>Core evidence today:</strong> within the 5km comparable public/commercial pool of 9 sites, activity is led by Telford Madeley KFC 13 Parkway, Station Yard, Wharfage Car Park; real public charging is present in the area, but demand is concentrated in a small number of mature nodes.
+              <strong>Core evidence:</strong> the 5km local basket has 9 monitored sites, 3.9% average occupancy, and a peak of 6 EVSE charging at once.
             </p>
           </div>
           <div class="verdict-box">
             <p>
-              <strong>Tencent-cloud wider universe:</strong> the 5km monitor currently tracks <strong>23</strong> visible entries, collapsing to <strong>22</strong> power-resolved sites. Of those, the direct fast-charge benchmark layer is the <strong>7</strong> sites at or above 50kW, led by Station Yard, Telford Madeley KFC 13 Parkway, The Telford Hotel Spa and Golf Resort.
+              <strong>Wider monitored universe:</strong> 23 entries / 22 power-resolved sites, including 7 sites at or above 50kW.
             </p>
           </div>
         </div>
@@ -656,32 +883,32 @@
         <article class="summary-card">
           <span>Monitoring window</span>
           <strong>3.1 days</strong>
-          <p>This initial read is based on a monitoring window of about three days.</p>
+          <p>Short monitoring window, suitable for screening only.</p>
         </article>
         <article class="summary-card">
           <span>Local core basket</span>
           <strong>3.9% avg occupancy</strong>
-          <p>The nearest 9-site local basket is still relatively cool on average; that is the right read for the close-in neighbourhood around Marnwood.</p>
+          <p>Close-in public charging exists, but usage is still relatively cool.</p>
         </article>
         <article class="summary-card">
           <span>5km monitored universe</span>
           <strong>1313 - 2439 kWh/day</strong>
-          <p>This is the wider Tencent-cloud monitored universe, not the local 9-site basket and not the forecast throughput of Marnwood Hall itself.</p>
+          <p>Regional demand proxy only, not Marnwood forecast throughput.</p>
         </article>
         <article class="summary-card">
           <span>&ge;50kW benchmark layer</span>
           <strong>1070 - 1988 kWh/day</strong>
-          <p>The 7 high-power sites already explain about 82% of the wider power-weighted demand proxy, so this is the higher benchmark layer to compare against.</p>
+          <p>Higher-power benchmark layer for comparison.</p>
         </article>
       </div>
       <div class="hero-bottom">
         <article class="takeaway-card">
           <strong>Why continue</strong>
-          <p>The area already shows real public charging activity. Close to Marnwood, that activity is clearest at KFC rapid, Station Yard, and Wharfage; across the wider monitored universe, the higher-power layer is led by KFC, the Telford Hotel Spa site, and Shell Stirchley.</p>
+          <p>The area already shows real public charging activity, led by a small set of mature nodes.</p>
         </article>
         <article class="takeaway-card">
           <strong>What remains unproven</strong>
-          <p>Stage-1 still needs to confirm likely capture at Marnwood Hall, whether the frontage layout works in practice, and whether grid / site authority are manageable. Peak simultaneous charging observed in the current window reached about 6 EVSE.</p>
+          <p>Stage-1 must prove Marnwood's capture, frontage layout, grid route, and site authority.</p>
         </article>
       </div>
     </header>
@@ -729,7 +956,7 @@
         <h3>Frontage / access visual</h3>
         <img src="assets/frontage.png" alt="Marnwood Hall frontage and access view" />
       </article>
-      <div class="note">
+      <div class="note site-intro-note">
         <p>
           At this stage the most defensible framing is a town-edge / local-through-traffic / frontage-capture site, rather than a closed destination site or a mature meal-stop node.
         </p>
@@ -807,7 +1034,7 @@
     </article>
 
       </div>
-      <div class="two-col">
+      <div class="two-col competition-layout">
         <article class="panel">
           <h3>Competitor map</h3>
           <img src="assets/competitor_map.png" alt="Comparable deployment map" />
@@ -817,7 +1044,7 @@
           <img src="assets/competitor_bar.png" alt="Comparable station scale and occupancy" />
         </article>
       </div>
-      <div class="table-wrap">
+      <div class="table-wrap competition-extra">
         <table>
           <thead>
             <tr>
@@ -903,7 +1130,7 @@
           </tbody>
         </table>
       </div>
-      <div class="note">
+      <div class="note competition-extra">
         <p>
           The map and close-in usage pages use the <strong>9-site local core basket</strong> nearest to Marnwood. The wider Tencent-cloud monitor line has <strong>23 visible entries / 22 power-resolved sites</strong>. The direct fast-charge benchmark is the <strong>7-site layer at or above 50kW</strong>. Shell Stirchley sits just outside a strict Marnwood-only 5km circle, but remains useful as a fast-charge benchmark.
         </p>
@@ -937,7 +1164,7 @@
         <span><b>11.9%</b><small>Avg occupancy</small></span>
         <span><b>358</b><small>kWh/day proxy</small></span>
       </div>
-      <p>High-power rapid charging in a mature convenience setting lifts daily kWh materially.</p>
+      <p>Rapid + high power drives daily kWh.</p>
     </article>
 
 
@@ -949,7 +1176,7 @@
         <span><b>1.2%</b><small>Avg occupancy</small></span>
         <span><b>62</b><small>kWh/day proxy</small></span>
       </div>
-      <p>A local hub profile: volume comes more from consistency than from single-gun power.</p>
+      <p>Local hub with steadier use.</p>
     </article>
 
 
@@ -961,22 +1188,21 @@
         <span><b>9.9%</b><small>Avg occupancy</small></span>
         <span><b>51</b><small>kWh/day proxy</small></span>
       </div>
-      <p>A car-park slow-charging profile: dwell time is longer, but power is too low for high daily kWh.</p>
+      <p>Slow charger: longer dwell, lower kWh.</p>
     </article>
 
           </div>
         </article>
       </div>
-      <div class="note">
+      <div class="note calc-strip observed-note">
+        <strong>Proxy formula</strong>
         <p>
-          The heatmap shows when each comparable station is active across the 24-hour day.
-          The nearby area has real public charging activity, but it is concentrated in a few mature nodes and time windows.
-          The right-side kWh/day proxy is a screening conversion, not a meter read: <strong>18.0h × 125kW × 50% ÷ 3.1 days ≈ 358 kWh/day</strong>.
+          kWh/day proxy = observed charging hours x charger power x 50% delivery factor / 3.1 days. KFC is high mainly because it is 125kW; Wharfage is visible but remains lower because it is 7.2kW.
         </p>
       </div>
     </section>
 
-    <section>
+    <section class="risk-section">
       <div class="section-head">
         <div class="section-index">05 Demand proxy</div>
         <div>
@@ -1033,7 +1259,7 @@
           </div>
         </article>
       </div>
-      <div class="note">
+      <div class="note demand-note">
         <p>
           This is a screening-level demand proxy, not a revenue forecast and not meter-grade delivered kWh.
           The local 9-site range comes from <strong>aggregate charging hours × power across the 9-site local core basket × 35%-65%, then ÷ 3.1 days = 353-655 kWh/day</strong>. The wider monitored universe reads at <strong>1313-2439 kWh/day</strong>, and the 7 sites at or above 50kW explain about <strong>82%</strong> of that power-weighted proxy. The 35% / 50% / 65% factors are only Stage-0 conversion assumptions.

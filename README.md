@@ -8,7 +8,7 @@ Open in browser:
 Downloadable files:
 - Single-file HTML: `index.singlefile.html`
 - WeChat-friendly zip: `ironbridge_ev_stage0_singlefile.zip`
-- PDF deck: `ironbridge_ev_stage0_deck_a4_landscape.pdf`
+- 16:9 PDF deck: `ironbridge_ev_stage0_deck_16x9.pdf`
 
 Main publish entry:
 - `index.html`
